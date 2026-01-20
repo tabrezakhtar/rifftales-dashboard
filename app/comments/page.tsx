@@ -6,15 +6,15 @@ import Link from "next/link";
 import type { Comment } from "@/types";
 import CommentsList from "@/components/CommentsList";
 import SearchInput from "@/components/SearchInput";
-import { Container, Typography, Box, FormControl, InputLabel, Select, MenuItem, Alert, CircularProgress, Pagination, Stack, Button } from '@mui/material';
+import { Container, Typography, Box, FormControl, InputLabel, Select, MenuItem, Alert, CircularProgress, Pagination, Stack, Button } from "@mui/material";
 
 const fetcher = (url: string) => fetch(url).then((res) => res.json());
 
 export default function CommentsPage() {
   const [page, setPage] = useState(1);
   const [pageSize, setPageSize] = useState(10);
-  const [sort, setSort] = useState<'asc' | 'desc'>('desc');
-  const [search, setSearch] = useState('');
+  const [sort, setSort] = useState<"asc" | "desc">("desc");
+  const [search, setSearch] = useState("");
   
   const { data, error, isLoading } = useSWR<{ comments: Comment[], total: number }>(`/api/comments?page=${page}&pageSize=${pageSize}&sort=${sort}&search=${encodeURIComponent(search)}`, fetcher, { keepPreviousData: true });
   const comments = data?.comments || [];
@@ -24,7 +24,7 @@ export default function CommentsPage() {
   return (
     <Container maxWidth="lg" sx={{ py: 4 }}>
       <Box sx={{ mb: 3 }}>
-        <Button component={Link} href="/" variant="text" sx={{ p: 0, minWidth: 'auto' }}>
+        <Button component={Link} href="/" variant="text" sx={{ p: 0, minWidth: "auto" }}>
           ‹ Back to Home
         </Button>
       </Box>
@@ -48,8 +48,8 @@ export default function CommentsPage() {
         />
       </Box>
       
-      <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', mb: 3 }}>
-        <Stack direction={{ xs: 'column', sm: 'row' }} spacing={2}>
+      <Box sx={{ display: "flex", justifyContent: "space-between", alignItems: "center", mb: 3 }}>
+        <Stack direction={{ xs: "column", sm: "row" }} spacing={2}>
           <FormControl size="small" sx={{ minWidth: 200 }}>
             <InputLabel id="sort-label">Sort by date</InputLabel>
             <Select
@@ -58,7 +58,7 @@ export default function CommentsPage() {
               value={sort}
               label="Sort by date"
               onChange={(e) => {
-                setSort(e.target.value as 'asc' | 'desc');
+                setSort(e.target.value as "asc" | "desc");
                 setPage(1);
               }}
             >
@@ -101,7 +101,7 @@ export default function CommentsPage() {
       
       {error && <Alert severity="error" sx={{ mb: 3 }}>Failed to load comments</Alert>}
       {isLoading && (
-        <Box sx={{ display: 'flex', justifyContent: 'center', py: 4 }}>
+        <Box sx={{ display: "flex", justifyContent: "center", py: 4 }}>
           <CircularProgress />
         </Box>
       )}

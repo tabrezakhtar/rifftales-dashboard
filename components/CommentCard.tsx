@@ -1,23 +1,23 @@
-import { Comment } from '@/types';
-import { Card, CardContent, Typography, Box, Chip } from '@mui/material';
+import { Comment } from "@/types";
+import { Card, CardContent, Typography, Box, Chip } from "@mui/material";
 
 interface CommentCardProps {
   comment: Comment;
 }
 
 export default function CommentCard({ comment }: CommentCardProps) {
-  const formattedDate = new Date(comment.date).toLocaleDateString('en-US', {
-    year: 'numeric',
-    month: 'short',
-    day: 'numeric',
-    hour: '2-digit',
-    minute: '2-digit'
+  const formattedDate = new Date(comment.date).toLocaleDateString("en-US", {
+    year: "numeric",
+    month: "short",
+    day: "numeric",
+    hour: "2-digit",
+    minute: "2-digit"
   });
 
   return (
-    <Card sx={{ mb: 2, boxShadow: 2, width: '100%' }}>
+    <Card sx={{ mb: 2, boxShadow: 2, width: "100%" }}>
       <CardContent>
-        <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'start', mb: 1 }}>
+        <Box sx={{ display: "flex", justifyContent: "space-between", alignItems: "start", mb: 1 }}>
           <Typography variant="h6" component="h3" sx={{ fontWeight: 600 }}>
             {String(comment.user.username)}
           </Typography>

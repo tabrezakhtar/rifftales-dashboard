@@ -30,3 +30,8 @@ You MUST follow the following workflow for all tasks:
 8. Test frequently. Run tests after each change to verify correctness.
 9. Iterate until the root cause is fixed and all tests pass.
 10. Reflect and validate comprehensively. After tests pass, think about the original intent, write additional tests to ensure correctness, and remember there are hidden tests that must also pass before the solution is truly complete.
+
+# JavaScript/TypeScript Style Guide
+- use semicolons at the end of statements.
+- indent code using 2 spaces.
+- prefer speech marks over single quotes for strings and imports. e.g. import { useEffect, useState } from "react";
