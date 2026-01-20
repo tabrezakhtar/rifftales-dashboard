@@ -1,0 +1,92 @@
+// Jest Snapshot v1, https://jestjs.io/docs/snapshot-testing
+
+exports[`renders CommentsList unchanged 1`] = `
+<div>
+  <ul
+    class="MuiList-root MuiList-padding css-v54zg0-MuiList-root"
+  >
+    <li
+      class="MuiListItem-root MuiListItem-gutters MuiListItem-padding css-10ewkz-MuiListItem-root"
+    >
+      <div
+        class="MuiPaper-root MuiPaper-elevation MuiPaper-rounded MuiPaper-elevation1 MuiCard-root css-1auaz8p-MuiPaper-root-MuiCard-root"
+        style="--Paper-shadow: 0px 2px 1px -1px rgba(0,0,0,0.2),0px 1px 1px 0px rgba(0,0,0,0.14),0px 1px 3px 0px rgba(0,0,0,0.12);"
+      >
+        <div
+          class="MuiCardContent-root css-1lt5qva-MuiCardContent-root"
+        >
+          <div
+            class="MuiBox-root css-tj4ytb"
+          >
+            <h3
+              class="MuiTypography-root MuiTypography-h6 css-fe0fwj-MuiTypography-root"
+            >
+              testuser1
+            </h3>
+            <span
+              class="MuiTypography-root MuiTypography-caption css-1374baf-MuiTypography-root"
+            >
+              Jan 1, 2024, 12:00 PM
+            </span>
+          </div>
+          <p
+            class="MuiTypography-root MuiTypography-body1 css-1e33hda-MuiTypography-root"
+          >
+            First comment
+          </p>
+          <div
+            class="MuiChip-root MuiChip-outlined MuiChip-sizeSmall MuiChip-colorDefault MuiChip-outlinedDefault css-1kpykzd-MuiChip-root"
+          >
+            <span
+              class="MuiChip-label MuiChip-labelSmall css-19m61dl-MuiChip-label"
+            >
+              Equipment ID: 507f1f77bcf86cd799439012
+            </span>
+          </div>
+        </div>
+      </div>
+    </li>
+    <li
+      class="MuiListItem-root MuiListItem-gutters MuiListItem-padding css-10ewkz-MuiListItem-root"
+    >
+      <div
+        class="MuiPaper-root MuiPaper-elevation MuiPaper-rounded MuiPaper-elevation1 MuiCard-root css-1auaz8p-MuiPaper-root-MuiCard-root"
+        style="--Paper-shadow: 0px 2px 1px -1px rgba(0,0,0,0.2),0px 1px 1px 0px rgba(0,0,0,0.14),0px 1px 3px 0px rgba(0,0,0,0.12);"
+      >
+        <div
+          class="MuiCardContent-root css-1lt5qva-MuiCardContent-root"
+        >
+          <div
+            class="MuiBox-root css-tj4ytb"
+          >
+            <h3
+              class="MuiTypography-root MuiTypography-h6 css-fe0fwj-MuiTypography-root"
+            >
+              testuser2
+            </h3>
+            <span
+              class="MuiTypography-root MuiTypography-caption css-1374baf-MuiTypography-root"
+            >
+              Jan 2, 2024, 03:30 PM
+            </span>
+          </div>
+          <p
+            class="MuiTypography-root MuiTypography-body1 css-1e33hda-MuiTypography-root"
+          >
+            Second comment
+          </p>
+          <div
+            class="MuiChip-root MuiChip-outlined MuiChip-sizeSmall MuiChip-colorDefault MuiChip-outlinedDefault css-1kpykzd-MuiChip-root"
+          >
+            <span
+              class="MuiChip-label MuiChip-labelSmall css-19m61dl-MuiChip-label"
+            >
+              Equipment ID: 507f1f77bcf86cd799439015
+            </span>
+          </div>
+        </div>
+      </div>
+    </li>
+  </ul>
+</div>
+`;

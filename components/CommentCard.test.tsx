@@ -5,10 +5,10 @@ import type { Comment } from "@/types";
 
 it("renders CommentCard unchanged", () => {
 const sampleComment: Comment = {
-  _id: new Types.ObjectId("507f1f77bcf86cd799439011"),
-  equipmentId: new Types.ObjectId("507f1f77bcf86cd799439012"),
+  _id: "507f1f77bcf86cd799439011" as unknown as Types.ObjectId,
+  equipmentId: "507f1f77bcf86cd799439012" as unknown as Types.ObjectId,
   user: {
-    _id: new Types.ObjectId("507f1f77bcf86cd799439013"),
+    _id: "507f1f77bcf86cd799439013" as unknown as Types.ObjectId,
     username: "testuser",
   },
   text: "This is a snapshot test",
