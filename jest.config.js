@@ -9,6 +9,9 @@ const config = {
   coverageDirectory: "coverage",
   coverageProvider: "v8",
   testEnvironment: "jsdom",
+  moduleNameMapper: {
+    "^@/(.*)$": "<rootDir>/$1"
+  },
 };
 
 // eslint-disable-next-line @typescript-eslint/no-require-imports
