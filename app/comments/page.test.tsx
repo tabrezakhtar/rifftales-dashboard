@@ -2,7 +2,7 @@ import { render, screen, fireEvent } from "@testing-library/react";
 import "@testing-library/jest-dom";
 import userEvent from "@testing-library/user-event";
 import CommentsPage from "./page";
-import { Types } from "mongoose";
+import type { ClientComment } from "@/types";
 import useSWR from 'swr';
 
 jest.mock("swr", () => ({
@@ -11,9 +11,9 @@ jest.mock("swr", () => ({
     data: {
       comments: [
         {
-          _id: "507f1f77bcf86cd799439011" as unknown as Types.ObjectId,
-          equipmentId: "507f1f77bcf86cd799439012" as unknown as Types.ObjectId,
-          user: { _id: "507f1f77bcf86cd799439013" as unknown as Types.ObjectId, username: "testuser" },
+          _id: "507f1f77bcf86cd799439011",
+          equipmentId: "507f1f77bcf86cd799439012",
+          user: { _id: "507f1f77bcf86cd799439013", username: "testuser" },
           text: "Sample comment",
           date: new Date("2024-01-01T12:00:00Z").toISOString(),
         },
@@ -68,9 +68,9 @@ it("changes page size when items per page select is changed", async () => {
 it("changes page when pagination is clicked", () => {
   const mockData = {
     comments: Array(30).fill(null).map((_, i) => ({
-      _id: `507f1f77bcf86cd79943901${i}` as unknown as Types.ObjectId,
-      equipmentId: `507f1f77bcf86cd79943902${i}` as unknown as Types.ObjectId,
-      user: { _id: `507f1f77bcf86cd79943903${i}` as unknown as Types.ObjectId, username: `testuser${i}` },
+      _id: `507f1f77bcf86cd79943901${i}`,
+      equipmentId: `507f1f77bcf86cd79943902${i}`,
+      user: { _id: `507f1f77bcf86cd79943903${i}`, username: `testuser${i}` },
       text: `Comment ${i}`,
       date: new Date("2024-01-01T12:00:00Z").toISOString(),
     })),

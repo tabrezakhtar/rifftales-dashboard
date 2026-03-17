@@ -1,13 +1,27 @@
 import dbConnect from "@/lib/mongodb";
 import CommentModel from "@/models/Comment";
-import UserModel from "@/models/User";
-import type { Comment } from "@/types";
+import type { ClientComment, ServerComment } from "@/types";
 
-export async function fetchComments(page: number = 1, pageSize: number = 10, sort: 'asc' | 'desc' = 'desc', search: string = ''): Promise<{ comments: Comment[], total: number }> {
+function toClientComment(comment: ServerComment): ClientComment {
+  return {
+    _id: comment._id.toString(),
+    equipmentId: comment.equipmentId.toString(),
+    user: {
+      ...comment.user,
+      _id: comment.user._id.toString(),
+    },
+    text: comment.text,
+    date: comment.date,
+  };
+}
+
+export async function fetchComments(
+  page: number = 1,
+  pageSize: number = 10,
+  sort: "asc" | "desc" = "desc",
+  search: string = ""
+): Promise<{ comments: ClientComment[]; total: number }> {
   await dbConnect();
-
-  // Ensure User model is registered before querying
-  void UserModel;
 
   const skip = (page - 1) * pageSize;
   const query = search ? { text: { $regex: search, $options: 'i' } } : {};
@@ -23,5 +37,5 @@ export async function fetchComments(page: number = 1, pageSize: number = 10, sor
   
   const total = await CommentModel.countDocuments(query);
   
-  return { comments: comments as Comment[], total };
+  return { comments: (comments as ServerComment[]).map(toClientComment), total };
 }

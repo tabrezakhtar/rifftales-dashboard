@@ -3,7 +3,7 @@
 import { useState } from "react";
 import useSWR from "swr";
 import Link from "next/link";
-import type { Comment } from "@/types";
+import type { ClientComment } from "@/types";
 import CommentsList from "@/components/CommentsList";
 import SearchInput from "@/components/SearchInput";
 import { Container, Typography, Box, FormControl, InputLabel, Select, MenuItem, Alert, CircularProgress, Pagination, Stack, Button } from "@mui/material";
@@ -16,7 +16,9 @@ export default function CommentsPage() {
   const [sort, setSort] = useState<"asc" | "desc">("desc");
   const [search, setSearch] = useState("");
   
-  const { data, error, isLoading } = useSWR<{ comments: Comment[], total: number }>(`/api/comments?page=${page}&pageSize=${pageSize}&sort=${sort}&search=${encodeURIComponent(search)}`, fetcher, { keepPreviousData: true });
+  const { data, error, isLoading } = useSWR<{
+    comments: ClientComment[]; total: number
+  }>(`/api/comments?page=${page}&pageSize=${pageSize}&sort=${sort}&search=${encodeURIComponent(search)}`,fetcher, { keepPreviousData: true });
   const comments = data?.comments || [];
   const total = data?.total || 0;
   const totalPages = Math.ceil(total / pageSize);

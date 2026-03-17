@@ -1,7 +1,7 @@
 import mongoose, { Schema, Model } from "mongoose";
-import type { Comment } from "@/types";
+import type { ServerComment } from "@/types";
 
-const CommentSchema = new Schema<Comment>(
+const CommentSchema = new Schema<ServerComment>(
   {
     equipmentId: {
       type: mongoose.Schema.Types.ObjectId,
@@ -26,7 +26,7 @@ const CommentSchema = new Schema<Comment>(
   }
 );
 
-const CommentModel: Model<Comment> =
-  mongoose.models.Comment || mongoose.model<Comment>("Comment", CommentSchema);
+const CommentModel: Model<ServerComment> =
+  mongoose.models.Comment || mongoose.model<ServerComment>("Comment", CommentSchema);
 
 export default CommentModel;

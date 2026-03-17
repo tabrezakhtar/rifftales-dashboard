@@ -1,11 +1,7 @@
-import mongoose, { Schema, Model, Types } from "mongoose";
+import mongoose, { Schema, Model } from "mongoose";
+import type { ServerUser } from "@/types";
 
-export interface User {
-  _id: Types.ObjectId;
-  username: string;
-}
-
-const UserSchema = new Schema<User>(
+const UserSchema = new Schema<ServerUser>(
   {
     username: {
       type: String,
@@ -27,7 +23,7 @@ const UserSchema = new Schema<User>(
   }
 );
 
-const UserModel: Model<User> =
-  mongoose.models.User || mongoose.model<User>("User", UserSchema);
+const UserModel: Model<ServerUser> =
+  mongoose.models.User || mongoose.model<ServerUser>("User", UserSchema);
 
 export default UserModel;

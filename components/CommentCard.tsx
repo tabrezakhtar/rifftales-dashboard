@@ -1,8 +1,8 @@
-import { Comment } from "@/types";
+import type { ClientComment } from "@/types";
 import { Card, CardContent, Typography, Box, Chip } from "@mui/material";
 
 interface CommentCardProps {
-  comment: Comment;
+  comment: ClientComment;
 }
 
 export default function CommentCard({ comment }: CommentCardProps) {
