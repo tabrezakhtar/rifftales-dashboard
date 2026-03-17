@@ -1,3 +1,4 @@
+import 'server-only';
 import type { Types } from "mongoose";
 import type { ServerUser } from "@/types/server/User";
 
