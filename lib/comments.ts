@@ -1,5 +1,6 @@
 import dbConnect from "@/lib/mongodb";
 import CommentModel from "@/models/Comment";
+import '@/models/User';
 import type { ClientComment, ServerComment } from "@/types";
 
 function toClientComment(comment: ServerComment): ClientComment {
