@@ -1,5 +1,5 @@
 import type { ClientComment } from "@/types";
-import CommentCard from "@/components/CommentCard";
+import CommentCard from "@/components/comments/CommentCard";
 import { List, ListItem } from "@mui/material";
 
 interface CommentsListProps {

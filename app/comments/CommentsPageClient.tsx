@@ -4,7 +4,7 @@ import { useState, useRef, useEffect } from "react";
 import useSWR from "swr";
 import Link from "next/link";
 import type { ClientComment } from "@/types";
-import CommentsList from "@/components/CommentsList";
+import CommentsList from "@/components/comments/CommentsList";
 import SearchInput from "@/components/SearchInput";
 import { Container, Typography, Box, FormControl, InputLabel, Select, MenuItem, Alert, CircularProgress, Pagination, Stack, Button } from "@mui/material";
 
