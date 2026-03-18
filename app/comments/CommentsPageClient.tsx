@@ -44,11 +44,6 @@ export default function CommentsPageClient({ initialData }: CommentsPageClientPr
 
   return (
     <Container maxWidth="lg" sx={{ py: 4 }}>
-      <Box sx={{ mb: 3 }}>
-        <Button component={Link} href="/" variant="text" sx={{ p: 0, minWidth: "auto" }}>
-          ‹ Back to Home
-        </Button>
-      </Box>
       <Typography variant="h3" component="h1" gutterBottom sx={{ fontWeight: 600, mb: 2 }}>
         User Comments
       </Typography>

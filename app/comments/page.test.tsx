@@ -44,6 +44,11 @@ it("renders Comment page UI", () => {
   expect(getByText("Sample comment")).toBeInTheDocument();
 });
 
+it("renders without back button", () => {
+  const { queryByText } = render(<CommentsPageClient initialData={initialData} />);
+  expect(queryByText("‹ Back to Home")).not.toBeInTheDocument();
+});
+
 it("updates search on input change", () => {
   const { getByLabelText } = render(<CommentsPageClient initialData={initialData} />);
   const searchInput = getByLabelText("Search comments");
