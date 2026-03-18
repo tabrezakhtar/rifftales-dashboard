@@ -8,6 +8,5 @@ export async function GET(request: Request) {
   const sort = (searchParams.get("sort") === "asc" ? "asc" : "desc") as "asc" | "desc";
   const search = searchParams.get("search") || "";
   const { comments, total } = await fetchComments(page, pageSize, sort, search);
-  console.log(comments);
   return NextResponse.json({ comments, total });
 }

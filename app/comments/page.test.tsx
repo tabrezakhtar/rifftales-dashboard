@@ -1,9 +1,22 @@
 import { render, screen, fireEvent } from "@testing-library/react";
 import "@testing-library/jest-dom";
 import userEvent from "@testing-library/user-event";
-import CommentsPage from "./page";
 import type { ClientComment } from "@/types";
-import useSWR from 'swr';
+import CommentsPageClient from "./CommentsPageClient";
+import useSWR from "swr";
+
+const initialData = {
+  comments: [
+    {
+      _id: "507f1f77bcf86cd799439011",
+      equipmentId: "507f1f77bcf86cd799439012",
+      user: { _id: "507f1f77bcf86cd799439013", username: "testuser" },
+      text: "Sample comment",
+      date: new Date("2024-01-01T12:00:00Z").toISOString(),
+    },
+  ],
+  total: 1,
+};
 
 jest.mock("swr", () => ({
   __esModule: true,
@@ -25,13 +38,14 @@ jest.mock("swr", () => ({
   })),
 }));
 
-it("renders CommentsPage unchanged", () => {
-  const { container } = render(<CommentsPage />);
-  expect(container).toMatchSnapshot();
+it("renders Comment page UI", () => {
+  const { getByText } = render(<CommentsPageClient initialData={initialData} />);
+  expect(getByText("User Comments")).toBeInTheDocument();
+  expect(getByText("Sample comment")).toBeInTheDocument();
 });
 
 it("updates search on input change", () => {
-  const { getByLabelText } = render(<CommentsPage />);
+  const { getByLabelText } = render(<CommentsPageClient initialData={initialData} />);
   const searchInput = getByLabelText("Search comments");
 
   fireEvent.change(searchInput, { target: { value: "new search" } });
@@ -40,7 +54,7 @@ it("updates search on input change", () => {
 });
 
 it("changes sort order when sort select is changed", async () => {
-  render(<CommentsPage />);
+  render(<CommentsPageClient initialData={initialData} />);
   const user = userEvent.setup();
 
   const sortSelect = screen.getByLabelText("Sort by date");
@@ -53,7 +67,7 @@ it("changes sort order when sort select is changed", async () => {
 });
 
 it("changes page size when items per page select is changed", async () => {
-  render(<CommentsPage />);
+  render(<CommentsPageClient initialData={initialData} />);
   const user = userEvent.setup();
 
   const pageSizeSelect = screen.getByLabelText("Items per page");
@@ -83,7 +97,7 @@ it("changes page when pagination is clicked", () => {
     isLoading: false,
   }));
 
-  const { getByLabelText } = render(<CommentsPage />);
+  const { getByLabelText } = render(<CommentsPageClient initialData={initialData} />);
   const page2Button = getByLabelText("Go to page 2");
 
   fireEvent.click(page2Button);
@@ -98,6 +112,6 @@ it("treats undefined data as empty comments and total 0", () => {
     isLoading: false,
   }));
 
-  const { queryByText } = render(<CommentsPage />);
+  const { queryByText } = render(<CommentsPageClient initialData={{ comments: [], total: 0 }} />);
   expect(queryByText("Sample comment")).toBeNull();
 });
