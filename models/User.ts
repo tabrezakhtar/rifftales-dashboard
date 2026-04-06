@@ -17,6 +17,13 @@ const UserSchema = new Schema<ServerUser>(
         message: "Username cannot contain emojis"
       }
     },
+    email: {
+      type: String,
+      required: true,
+      unique: true,
+      trim: true,
+      lowercase: true,
+    },
   },
   {
     collection: "users",

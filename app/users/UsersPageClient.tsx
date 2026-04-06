@@ -2,24 +2,24 @@
 
 import { useState, useRef, useEffect } from "react";
 import useSWR from "swr";
-import type { ClientComment } from "@/types";
-import CommentsList from "@/components/comments/CommentsList";
+import type { ClientUser } from "@/types";
+import UsersList from "@/components/users/UsersList";
 import SearchInput from "@/components/SearchInput";
-import { Container, Typography, Box, FormControl, InputLabel, Select, MenuItem, Alert, CircularProgress, Pagination, Stack, Button } from "@mui/material";
+import { Container, Typography, Box, FormControl, InputLabel, Select, MenuItem, Alert, CircularProgress, Pagination, Stack } from "@mui/material";
 
 const fetcher = (url: string) => fetch(url).then((res) => res.json());
 
-interface CommentsPageClientProps {
+interface UsersPageClientProps {
   initialData: {
-    comments: ClientComment[];
+    users: ClientUser[];
     total: number;
   };
 }
 
-export default function CommentsPageClient({ initialData }: CommentsPageClientProps) {
+export default function UsersPageClient({ initialData }: UsersPageClientProps) {
   const [page, setPage] = useState(1);
   const [pageSize, setPageSize] = useState(10);
-  const [sort, setSort] = useState<"asc" | "desc">("desc");
+  const [sort, setSort] = useState<"asc" | "desc">("asc");
   const [search, setSearch] = useState("");
 
   const isFirstRender = useRef(true);
@@ -30,24 +30,24 @@ export default function CommentsPageClient({ initialData }: CommentsPageClientPr
   const shouldUseInitialData = isFirstRender.current;
 
   const { data, error, isLoading } = useSWR<{
-    comments: ClientComment[]; total: number
-  }>(`/api/comments?page=${page}&pageSize=${pageSize}&sort=${sort}&search=${encodeURIComponent(search)}`, fetcher, { 
+    users: ClientUser[]; total: number
+  }>(`/api/users?page=${page}&pageSize=${pageSize}&sort=${sort}&search=${encodeURIComponent(search)}`, fetcher, { 
     fallbackData: shouldUseInitialData ? initialData : undefined,
     revalidateOnMount: !shouldUseInitialData,
     keepPreviousData: true 
   });
   
-  const comments = data?.comments || [];
+  const users = data?.users || [];
   const total = data?.total || 0;
   const totalPages = Math.ceil(total / pageSize);
 
   return (
     <Container maxWidth="lg" sx={{ py: 4 }}>
       <Typography variant="h3" component="h1" gutterBottom sx={{ fontWeight: 600, mb: 2 }}>
-        User Comments
+        Users
       </Typography>
       <Typography variant="body1" color="text.secondary" sx={{ mb: 4 }}>
-        Welcome to the comments page!
+        Browse all users in the system.
       </Typography>
       
       <Box sx={{ mb: 3 }}>
@@ -58,27 +58,27 @@ export default function CommentsPageClient({ initialData }: CommentsPageClientPr
             setPage(1);
           }}
           debounceMs={300}
-          placeholder="Enter search text"
-          label="Search comments"
+          placeholder="Search by username"
+          label="Search users"
         />
       </Box>
       
       <Box sx={{ display: "flex", justifyContent: "space-between", alignItems: "center", mb: 3 }}>
         <Stack direction={{ xs: "column", sm: "row" }} spacing={2}>
           <FormControl size="small" sx={{ minWidth: 200 }}>
-            <InputLabel id="sort-label">Sort by date</InputLabel>
+            <InputLabel id="sort-label">Sort by username</InputLabel>
             <Select
               labelId="sort-label"
               id="sort"
               value={sort}
-              label="Sort by date"
+              label="Sort by username"
               onChange={(e) => {
                 setSort(e.target.value as "asc" | "desc");
                 setPage(1);
               }}
             >
-              <MenuItem value="desc">Newest first</MenuItem>
-              <MenuItem value="asc">Oldest first</MenuItem>
+              <MenuItem value="asc">A-Z</MenuItem>
+              <MenuItem value="desc">Z-A</MenuItem>
             </Select>
           </FormControl>
           
@@ -114,13 +114,13 @@ export default function CommentsPageClient({ initialData }: CommentsPageClientPr
         />
       </Box>
       
-      {error && <Alert severity="error" sx={{ mb: 3 }}>Failed to load comments</Alert>}
+      {error && <Alert severity="error" sx={{ mb: 3 }}>Failed to load users</Alert>}
       {isLoading && (
         <Box sx={{ display: "flex", justifyContent: "center", py: 4 }}>
           <CircularProgress />
         </Box>
       )}
-      {!isLoading && !error && <CommentsList comments={comments} />}
+      {!isLoading && !error && <UsersList users={users} />}
     </Container>
   );
 }
