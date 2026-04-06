@@ -1,12 +1,17 @@
+"use client";
+
 import type { ClientComment } from "@/types";
 import { Card, CardContent, Typography, Box, Chip } from "@mui/material";
 import Link from "next/link";
+import { useRouter } from "next/navigation";
 
 interface CommentCardProps {
   comment: ClientComment;
 }
 
 export default function CommentCard({ comment }: CommentCardProps) {
+  const router = useRouter();
+  
   const formattedDate = new Date(comment.date).toLocaleDateString("en-US", {
     year: "numeric",
     month: "short",
@@ -15,11 +20,29 @@ export default function CommentCard({ comment }: CommentCardProps) {
     minute: "2-digit"
   });
 
+  const handleCardClick = () => {
+    router.push(`/comment/${comment._id}`);
+  };
+
   return (
-    <Card sx={{ mb: 2, boxShadow: 2, width: "100%" }}>
+    <Card 
+      sx={{ 
+        mb: 2, 
+        boxShadow: 2, 
+        width: "100%",
+        cursor: "pointer",
+        transition: "all 0.2s ease-in-out",
+        "&:hover": {
+          boxShadow: 4,
+          backgroundColor: "action.hover",
+          transform: "translateY(-2px)"
+        }
+      }}
+      onClick={handleCardClick}
+    >
       <CardContent>
         <Box sx={{ display: "flex", justifyContent: "space-between", alignItems: "start", mb: 1 }}>
-          <Link href={`/user/${comment.user._id}`}>
+          <Link href={`/user/${comment.user._id}`} onClick={(e) => e.stopPropagation()}>
             <Typography variant="h6" component="h3" sx={{ fontWeight: 600, cursor: 'pointer', color: 'primary.main', textDecoration: 'underline', '&:hover': { textDecoration: 'underline' } }}>
               {String(comment.user.username)}
             </Typography>
@@ -43,3 +66,4 @@ export default function CommentCard({ comment }: CommentCardProps) {
     </Card>
   );
 }
+

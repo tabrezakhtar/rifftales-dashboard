@@ -1,6 +1,7 @@
 import { notFound } from "next/navigation";
 import { getUserAction } from "@/app/actions/users";
-import { Container, Typography, Card, CardContent, Box } from "@mui/material";
+import { Container, Typography, Card, CardContent, Box, Button } from "@mui/material";
+import ArrowBackIcon from "@mui/icons-material/ArrowBack";
 
 interface UserPageProps {
   params: Promise<{
@@ -19,6 +20,14 @@ export default async function UserPage({ params }: UserPageProps) {
 
   return (
     <Container maxWidth="lg" sx={{ py: 4 }}>
+      <Button 
+        component="a" 
+        href="/users" 
+        startIcon={<ArrowBackIcon />} 
+        sx={{ mb: 3 }}
+      >
+        Back to Users
+      </Button>
       <Typography variant="h3" component="h1" gutterBottom sx={{ fontWeight: 600, mb: 4 }}>
         User Profile
       </Typography>
