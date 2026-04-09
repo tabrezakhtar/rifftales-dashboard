@@ -1,5 +1,5 @@
 import { NextResponse } from "next/server";
-import { fetchComments } from "@/lib/comments";
+import { fetchEquipment } from "@/lib/equipment";
 
 export async function GET(request: Request) {
   const { searchParams } = new URL(request.url);
@@ -8,6 +8,6 @@ export async function GET(request: Request) {
   const sort = (searchParams.get("sort") === "asc" ? "asc" : "desc") as "asc" | "desc";
   const search = searchParams.get("search") || "";
   const userId = searchParams.get("userId") || "";
-  const { comments, total } = await fetchComments(page, pageSize, sort, search, userId);
-  return NextResponse.json({ comments, total });
+  const { equipment, total } = await fetchEquipment(page, pageSize, sort, search, userId);
+  return NextResponse.json({ equipment, total });
 }

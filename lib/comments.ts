@@ -1,7 +1,6 @@
 import dbConnect from "@/lib/mongodb";
 import CommentModel from "@/models/Comment";
-import '@/models/User';
-import type { ClientComment, ServerComment } from "@/types";
+import '@/models/User';import mongoose from "mongoose";import type { ClientComment, ServerComment } from "@/types";
 
 function toClientComment(comment: ServerComment): ClientComment {
   return {
@@ -20,12 +19,21 @@ export async function fetchComments(
   page: number = 1,
   pageSize: number = 10,
   sort: "asc" | "desc" = "desc",
-  search: string = ""
+  search: string = "",
+  userId: string = ""
 ): Promise<{ comments: ClientComment[]; total: number }> {
   await dbConnect();
 
   const skip = (page - 1) * pageSize;
-  const query = search ? { text: { $regex: search, $options: 'i' } } : {};
+  const query: any = {};
+  
+  if (search) {
+    query.text = { $regex: search, $options: "i" };
+  }
+  
+  if (userId && mongoose.Types.ObjectId.isValid(userId)) {
+    query.user = new mongoose.Types.ObjectId(userId);
+  }
   
   const comments = await CommentModel
     .find(query)

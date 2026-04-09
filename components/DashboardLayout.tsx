@@ -20,6 +20,7 @@ import ListItemIcon from "@mui/material/ListItemIcon";
 import ListItemText from "@mui/material/ListItemText";
 import InboxIcon from "@mui/icons-material/MoveToInbox";
 import MailIcon from "@mui/icons-material/Mail";
+import BuildIcon from "@mui/icons-material/Build";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 
@@ -130,6 +131,7 @@ export default function DashboardLayout({ children }: DashboardLayoutProps) {
     { text: "Home", icon: <InboxIcon />, href: "/" },
     { text: "Comments", icon: <MailIcon />, href: "/comments" },
     { text: "Users", icon: <InboxIcon />, href: "/users" },
+    { text: "Equipment", icon: <BuildIcon />, href: "/equipment" },
   ];
 
   return (

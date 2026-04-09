@@ -3,21 +3,21 @@
 import { useState, useRef, useEffect } from "react";
 import { useSearchParams } from "next/navigation";
 import useSWR from "swr";
-import type { ClientComment } from "@/types";
-import CommentsList from "@/components/comments/CommentsList";
+import type { ClientEquipment } from "@/types";
+import EquipmentList from "@/components/equipment/EquipmentList";
 import SearchInput from "@/components/SearchInput";
-import { Container, Typography, Box, FormControl, InputLabel, Select, MenuItem, Alert, CircularProgress, Pagination, Stack, Button } from "@mui/material";
+import { Container, Typography, Box, FormControl, InputLabel, Select, MenuItem, Alert, CircularProgress, Pagination, Stack } from "@mui/material";
 
 const fetcher = (url: string) => fetch(url).then((res) => res.json());
 
-interface CommentsPageClientProps {
+interface EquipmentPageClientProps {
   initialData: {
-    comments: ClientComment[];
+    equipment: ClientEquipment[];
     total: number;
   };
 }
 
-export default function CommentsPageClient({ initialData }: CommentsPageClientProps) {
+export default function EquipmentPageClient({ initialData }: EquipmentPageClientProps) {
   const searchParams = useSearchParams();
   const userId = searchParams.get("userId") || "";
   
@@ -34,24 +34,24 @@ export default function CommentsPageClient({ initialData }: CommentsPageClientPr
   const shouldUseInitialData = isFirstRender.current;
 
   const { data, error, isLoading } = useSWR<{
-    comments: ClientComment[]; total: number
-  }>(`/api/comments?page=${page}&pageSize=${pageSize}&sort=${sort}&search=${encodeURIComponent(search)}&userId=${userId}`, fetcher, { 
+    equipment: ClientEquipment[]; total: number
+  }>(`/api/equipment?page=${page}&pageSize=${pageSize}&sort=${sort}&search=${encodeURIComponent(search)}&userId=${userId}`, fetcher, { 
     fallbackData: shouldUseInitialData ? initialData : undefined,
     revalidateOnMount: !shouldUseInitialData,
     keepPreviousData: true 
   });
   
-  const comments = data?.comments || [];
+  const equipment = data?.equipment || [];
   const total = data?.total || 0;
   const totalPages = Math.ceil(total / pageSize);
 
   return (
     <Container maxWidth="lg" sx={{ py: 4 }}>
       <Typography variant="h3" component="h1" gutterBottom sx={{ fontWeight: 600, mb: 2 }}>
-        User Comments
+        Equipment
       </Typography>
       <Typography variant="body1" color="text.secondary" sx={{ mb: 4 }}>
-        Welcome to the comments page!
+        Browse all equipment in the system.
       </Typography>
       
       <Box sx={{ mb: 3 }}>
@@ -62,8 +62,8 @@ export default function CommentsPageClient({ initialData }: CommentsPageClientPr
             setPage(1);
           }}
           debounceMs={300}
-          placeholder="Enter search text"
-          label="Search comments"
+          placeholder="Search by name"
+          label="Search equipment"
         />
       </Box>
       
@@ -118,13 +118,13 @@ export default function CommentsPageClient({ initialData }: CommentsPageClientPr
         />
       </Box>
       
-      {error && <Alert severity="error" sx={{ mb: 3 }}>Failed to load comments</Alert>}
+      {error && <Alert severity="error" sx={{ mb: 3 }}>Failed to load equipment</Alert>}
       {isLoading && (
         <Box sx={{ display: "flex", justifyContent: "center", py: 4 }}>
           <CircularProgress />
         </Box>
       )}
-      {!isLoading && !error && <CommentsList comments={comments} />}
+      {!isLoading && !error && <EquipmentList equipment={equipment} />}
     </Container>
   );
 }

@@ -10,9 +10,10 @@ export async function getCommentsAction(
   page: number = 1,
   pageSize: number = 10,
   sort: "asc" | "desc" = "desc",
-  search: string = ""
+  search: string = "",
+  userId: string = ""
 ) {
-  return await fetchComments(page, pageSize, sort, search);
+  return await fetchComments(page, pageSize, sort, search, userId);
 }
 
 export async function getCommentAction(commentId: string): Promise<ClientComment | null> {

@@ -1,7 +1,9 @@
 import { notFound } from "next/navigation";
 import { getUserAction } from "@/app/actions/users";
-import { Container, Typography, Card, CardContent, Box, Button } from "@mui/material";
+import { Container, Typography, Card, CardContent, Box, Button, Stack } from "@mui/material";
 import ArrowBackIcon from "@mui/icons-material/ArrowBack";
+import CommentIcon from "@mui/icons-material/Comment";
+import BuildIcon from "@mui/icons-material/Build";
 
 interface UserPageProps {
   params: Promise<{
@@ -64,6 +66,32 @@ export default async function UserPage({ params }: UserPageProps) {
           </Box>
         </CardContent>
       </Card>
+      
+      <Box sx={{ mt: 4 }}>
+        <Typography variant="h5" component="h2" gutterBottom sx={{ fontWeight: 600, mb: 2 }}>
+          View User Content
+        </Typography>
+        <Stack direction={{ xs: "column", sm: "row" }} spacing={2}>
+          <Button
+            component="a"
+            href={`/comments?userId=${user._id}`}
+            variant="outlined"
+            startIcon={<CommentIcon />}
+            fullWidth
+          >
+            View Comments
+          </Button>
+          <Button
+            component="a"
+            href={`/equipment?userId=${user._id}`}
+            variant="outlined"
+            startIcon={<BuildIcon />}
+            fullWidth
+          >
+            View Equipment
+          </Button>
+        </Stack>
+      </Box>
     </Container>
   );
 }
