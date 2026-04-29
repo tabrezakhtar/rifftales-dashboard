@@ -1,3 +1,4 @@
+import "client-only";
 import type { ClientUser } from "@/types/client/User";
 
 export interface ClientEquipment {

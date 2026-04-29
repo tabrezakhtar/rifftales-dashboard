@@ -24,11 +24,32 @@ const UserSchema = new Schema<ServerUser>(
       trim: true,
       lowercase: true,
     },
+    banHistory: [{
+      date: {
+        type: Date,
+        required: true,
+        default: () => new Date(new Date().toISOString())
+      },
+      reason: {
+        type: String,
+        required: true
+      },
+      unbannedDate: {
+        type: Date,
+        default: null
+      }
+    }],
   },
   {
     collection: "users",
   }
 );
+
+UserSchema.methods.isBanned = function() {
+  if (!this.banHistory || this.banHistory.length === 0) return false;
+  const latestBan = this.banHistory[this.banHistory.length - 1];
+  return latestBan.unbannedDate === null;
+};
 
 const UserModel: Model<ServerUser> =
   mongoose.models.User || mongoose.model<ServerUser>("User", UserSchema);
