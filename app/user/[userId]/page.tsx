@@ -1,9 +1,10 @@
 import { notFound } from "next/navigation";
 import { getUserAction } from "@/app/actions/users";
-import { Container, Typography, Card, CardContent, Box, Button, Stack } from "@mui/material";
+import { Container, Typography, Card, CardContent, Box, Button, Stack, Chip } from "@mui/material";
 import ArrowBackIcon from "@mui/icons-material/ArrowBack";
 import CommentIcon from "@mui/icons-material/Comment";
 import BuildIcon from "@mui/icons-material/Build";
+import BanUserForm from "@/components/users/BanUserForm";
 
 interface UserPageProps {
   params: Promise<{
@@ -30,9 +31,19 @@ export default async function UserPage({ params }: UserPageProps) {
       >
         Back to Users
       </Button>
-      <Typography variant="h3" component="h1" gutterBottom sx={{ fontWeight: 600, mb: 4 }}>
-        User Profile
-      </Typography>
+      <Box sx={{ display: "flex", alignItems: "center", gap: 2, mb: 4 }}>
+        <Typography variant="h3" component="h1" sx={{ fontWeight: 600 }}>
+          User Profile
+        </Typography>
+        {user.isBanned && (
+          <Chip 
+            label="BANNED" 
+            color="error" 
+            size="medium" 
+            sx={{ fontWeight: 600, fontSize: "1rem" }}
+          />
+        )}
+      </Box>
       
       <Card sx={{ boxShadow: 2 }}>
         <CardContent>
@@ -66,6 +77,10 @@ export default async function UserPage({ params }: UserPageProps) {
           </Box>
         </CardContent>
       </Card>
+      
+      <Box sx={{ mt: 4 }}>
+        <BanUserForm userId={user._id} isBanned={user.isBanned} />
+      </Box>
       
       <Box sx={{ mt: 4 }}>
         <Typography variant="h5" component="h2" gutterBottom sx={{ fontWeight: 600, mb: 2 }}>

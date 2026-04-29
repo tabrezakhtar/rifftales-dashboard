@@ -1,7 +1,7 @@
 "use client";
 
 import type { ClientUser } from "@/types";
-import { Card, CardContent, Typography, Box } from "@mui/material";
+import { Card, CardContent, Typography, Box, Chip } from "@mui/material";
 import { useRouter } from "next/navigation";
 
 interface UserCardProps {
@@ -23,9 +23,12 @@ export default function UserCard({ user }: UserCardProps) {
         width: "100%",
         cursor: "pointer",
         transition: "all 0.2s ease-in-out",
+        backgroundColor: user.isBanned ? "error.light" : "background.paper",
+        borderLeft: user.isBanned ? "4px solid" : "none",
+        borderColor: user.isBanned ? "error.main" : "transparent",
         "&:hover": {
           boxShadow: 4,
-          backgroundColor: "action.hover",
+          backgroundColor: user.isBanned ? "error.light" : "action.hover",
           transform: "translateY(-2px)"
         }
       }}
@@ -33,10 +36,20 @@ export default function UserCard({ user }: UserCardProps) {
     >
       <CardContent>
         <Box sx={{ display: "flex", justifyContent: "space-between", alignItems: "start" }}>
-          <Box>
-            <Typography variant="h6" component="h3" sx={{ fontWeight: 600 }}>
-              {user.username}
-            </Typography>
+          <Box sx={{ flex: 1 }}>
+            <Box sx={{ display: "flex", alignItems: "center", gap: 1, mb: 0.5 }}>
+              <Typography variant="h6" component="h3" sx={{ fontWeight: 600 }}>
+                {user.username}
+              </Typography>
+              {user.isBanned && (
+                <Chip 
+                  label="BANNED" 
+                  color="error" 
+                  size="small" 
+                  sx={{ fontWeight: 600 }}
+                />
+              )}
+            </Box>
             <Typography variant="body2" color="text.secondary" sx={{ mt: 0.5 }}>
               {user.email}
             </Typography>

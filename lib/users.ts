@@ -3,10 +3,15 @@ import UserModel from "@/models/User";
 import type { ClientUser, ServerUser } from "@/types";
 
 function toClientUser(user: ServerUser): ClientUser {
+  const isBanned = user.banHistory && user.banHistory.length > 0 
+    ? user.banHistory[user.banHistory.length - 1].unbannedDate === null
+    : false;
+  
   return {
     _id: user._id.toString(),
     username: user.username,
     email: user.email,
+    isBanned,
   };
 }
 
