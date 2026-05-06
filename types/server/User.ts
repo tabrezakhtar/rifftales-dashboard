@@ -11,6 +11,7 @@ export interface ServerUser {
   _id: Types.ObjectId;
   username: string;
   email: string;
+  password: string;
   banHistory?: BanRecord[];
   isBanned?: () => boolean;
 }

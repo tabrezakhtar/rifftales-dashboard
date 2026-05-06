@@ -24,6 +24,10 @@ const UserSchema = new Schema<ServerUser>(
       trim: true,
       lowercase: true,
     },
+    password: {
+      type: String,
+      required: true,
+    },
     banHistory: [{
       date: {
         type: Date,

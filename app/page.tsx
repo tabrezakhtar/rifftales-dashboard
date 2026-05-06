@@ -1,40 +1,65 @@
-"use client";
+import { Container, Typography, Button, Box, TextField } from "@mui/material";
+import { redirect } from "next/navigation";
+import LockOutlinedIcon from "@mui/icons-material/LockOutlined";
 
-import Image from "next/image";
-import Link from "next/link";
-import { Container, Typography, Button, Box } from "@mui/material";
-import ConstructionIcon from "@mui/icons-material/Construction";
+async function login(formData: FormData) {
+  "use server";
+  
+  // No authentication logic yet - just redirect to comments
+  redirect("/comments");
+}
 
-export default function Home() {
+export default function LoginPage() {
   return (
-    <Container maxWidth="lg" sx={{ minHeight: "100vh", display: "flex", alignItems: "center", justifyContent: "center", bgcolor: "background.default" }}>
-      <Box sx={{ width: "100%", maxWidth: 800, py: 8, px: 4, bgcolor: "background.paper", borderRadius: 2, boxShadow: 1 }}>
-        <Image
-          src="/next.svg"
-          alt="Next.js logo"
-          width={100}
-          height={20}
-          priority
-          style={{ filter: "invert(1)" }} // For dark mode, adjust as needed
-        />
-        <Box sx={{ mt: 4, textAlign: { xs: "center", sm: "left" } }}>
-          <Typography variant="h3" component="h1" gutterBottom sx={{ fontWeight: 600, display: "flex", alignItems: "center" }}>
-            Welcome to RiffTales Dashboard <ConstructionIcon sx={{ ml: 2 }} /> Beta
+    <Container maxWidth="xs" sx={{ minHeight: "100vh", display: "flex", alignItems: "center", justifyContent: "center" }}>
+      <Box sx={{ width: "100%", p: 5, bgcolor: "background.paper", borderRadius: 3, boxShadow: 3 }}>
+        <Box sx={{ display: "flex", flexDirection: "column", alignItems: "center", mb: 4 }}>
+          <Box sx={{ bgcolor: "primary.main", borderRadius: "50%", p: 1.5, mb: 2 }}>
+            <LockOutlinedIcon sx={{ fontSize: 32, color: "white" }} />
+          </Box>
+          <Typography variant="h5" component="h1" sx={{ fontWeight: 600, mb: 0.5 }}>
+            RiffTales Dashboard
           </Typography>
-          <Typography variant="body1" sx={{ mb: 4, color: "text.secondary" }}>
-            Manage your comments and explore the features of RiffTales. Get started by viewing comments.
+          <Typography variant="body2" sx={{ color: "text.secondary" }}>
+            Please log in to continue
           </Typography>
         </Box>
-        <Box sx={{ mt: 4 }}>
+        
+        <form action={login}>
+          <Box sx={{ mb: 2.5 }}>
+            <TextField
+              fullWidth
+              label="Email"
+              name="email"
+              type="email"
+              required
+              autoComplete="email"
+              size="medium"
+            />
+          </Box>
+          
+          <Box sx={{ mb: 3 }}>
+            <TextField
+              fullWidth
+              label="Password"
+              name="password"
+              type="password"
+              required
+              autoComplete="current-password"
+              size="medium"
+            />
+          </Box>
+          
           <Button
-            variant="contained"
+            type="submit"
             fullWidth
-            component={Link}
-            href="/comments"
+            variant="contained"
+            size="large"
+            sx={{ py: 1.5, fontSize: "1rem", fontWeight: 600 }}
           >
-            View Comments
+            Log in
           </Button>
-        </Box>
+        </form>
       </Box>
     </Container>
   );
