@@ -1,15 +1,49 @@
-import { Container, Typography, Button, Box, TextField } from "@mui/material";
-import { redirect } from "next/navigation";
-import LockOutlinedIcon from "@mui/icons-material/LockOutlined";
+"use client";
 
-async function login(formData: FormData) {
-  "use server";
-  
-  // No authentication logic yet - just redirect to comments
-  redirect("/comments");
-}
+import { Container, Typography, Button, Box, TextField, Alert } from "@mui/material";
+import { useRouter } from "next/navigation";
+import LockOutlinedIcon from "@mui/icons-material/LockOutlined";
+import { useState } from "react";
 
 export default function LoginPage() {
+  const router = useRouter();
+  const [error, setError] = useState("");
+  const [loading, setLoading] = useState(false);
+
+  async function handleSubmit(event: React.FormEvent<HTMLFormElement>) {
+    event.preventDefault();
+    setError("");
+    setLoading(true);
+
+    const formData = new FormData(event.currentTarget);
+    const email = formData.get("email") as string;
+    const password = formData.get("password") as string;
+
+    try {
+      const response = await fetch("/api/login", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ email, password }),
+      });
+
+      const data = await response.json();
+
+      if (!response.ok) {
+        setError(data.error || "Login failed");
+        setLoading(false);
+        return;
+      }
+
+      router.push("/comments");
+      router.refresh();
+    } catch (err) {
+      setError("An error occurred. Please try again.");
+      setLoading(false);
+    }
+  }
+
   return (
     <Container maxWidth="xs" sx={{ minHeight: "100vh", display: "flex", alignItems: "center", justifyContent: "center" }}>
       <Box sx={{ width: "100%", p: 5, bgcolor: "background.paper", borderRadius: 3, boxShadow: 3 }}>
@@ -25,7 +59,13 @@ export default function LoginPage() {
           </Typography>
         </Box>
         
-        <form action={login}>
+        {error && (
+          <Alert severity="error" sx={{ mb: 2 }}>
+            {error}
+          </Alert>
+        )}
+
+        <form onSubmit={handleSubmit}>
           <Box sx={{ mb: 2.5 }}>
             <TextField
               fullWidth
@@ -35,6 +75,7 @@ export default function LoginPage() {
               required
               autoComplete="email"
               size="medium"
+              disabled={loading}
             />
           </Box>
           
@@ -47,6 +88,7 @@ export default function LoginPage() {
               required
               autoComplete="current-password"
               size="medium"
+              disabled={loading}
             />
           </Box>
           
@@ -55,9 +97,10 @@ export default function LoginPage() {
             fullWidth
             variant="contained"
             size="large"
+            disabled={loading}
             sx={{ py: 1.5, fontSize: "1rem", fontWeight: 600 }}
           >
-            Log in
+            {loading ? "Logging in..." : "Log in"}
           </Button>
         </form>
       </Box>

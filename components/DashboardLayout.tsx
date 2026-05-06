@@ -21,8 +21,10 @@ import ListItemText from "@mui/material/ListItemText";
 import InboxIcon from "@mui/icons-material/MoveToInbox";
 import MailIcon from "@mui/icons-material/Mail";
 import BuildIcon from "@mui/icons-material/Build";
+import LogoutIcon from "@mui/icons-material/Logout";
 import Link from "next/link";
-import { usePathname } from "next/navigation";
+import { usePathname, useRouter } from "next/navigation";
+import { Button } from "@mui/material";
 
 const drawerWidth = 240;
 
@@ -102,6 +104,7 @@ interface DashboardLayoutProps {
 
 export default function DashboardLayout({ children }: DashboardLayoutProps) {
   const theme = useTheme();
+  const router = useRouter();
   const [open, setOpen] = React.useState(true);
   const pathname = usePathname();
 
@@ -127,8 +130,19 @@ export default function DashboardLayout({ children }: DashboardLayoutProps) {
     setOpen(false);
   };
 
+  const handleLogout = async () => {
+    try {
+      await fetch("/api/logout", {
+        method: "POST",
+      });
+      router.push("/");
+      router.refresh();
+    } catch (error) {
+      console.error("Logout failed:", error);
+    }
+  };
+
   const menuItems = [
-    { text: "Home", icon: <InboxIcon />, href: "/" },
     { text: "Comments", icon: <MailIcon />, href: "/comments" },
     { text: "Users", icon: <InboxIcon />, href: "/users" },
     { text: "Equipment", icon: <BuildIcon />, href: "/equipment" },
@@ -151,9 +165,16 @@ export default function DashboardLayout({ children }: DashboardLayoutProps) {
           >
             <MenuIcon />
           </IconButton>
-          <Typography variant="h6" noWrap component="div">
+          <Typography variant="h6" noWrap component="div" sx={{ flexGrow: 1 }}>
             Rifftales Dashboard
           </Typography>
+          <Button
+            color="inherit"
+            startIcon={<LogoutIcon />}
+            onClick={handleLogout}
+          >
+            Logout
+          </Button>
         </Toolbar>
       </AppBar>
       <Drawer variant="permanent" open={open}>
