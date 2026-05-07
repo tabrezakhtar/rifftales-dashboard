@@ -14,4 +14,5 @@ export interface ServerUser {
   password: string;
   banHistory?: BanRecord[];
   isBanned?: () => boolean;
+  featured?: boolean;
 }

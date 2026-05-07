@@ -43,6 +43,7 @@ const UserSchema = new Schema<ServerUser>(
         default: null
       }
     }],
+    featured: { type: Boolean, default: false }
   },
   {
     collection: "users",

@@ -25,6 +25,7 @@ export async function getUserAction(userId: string): Promise<ClientUser | null> 
       username: user.username,
       email: user.email,
       isBanned,
+      featured: user.featured || false,
     };
   } catch (error) {
     console.error("Error fetching user:", error);
@@ -112,5 +113,29 @@ export async function unbanUserAction(userId: string): Promise<{ success: boolea
   } catch (error) {
     console.error("Error unbanning user:", error);
     return { success: false, error: "Failed to unban user" };
+  }
+}
+
+export async function toggleFeaturedUserAction(userId: string, featured: boolean): Promise<{ success: boolean; error?: string }> {
+  try {
+    await dbConnect();
+    
+    const user = await UserModel.findByIdAndUpdate(
+      userId,
+      { featured },
+      { new: true, runValidators: true }
+    );
+    
+    if (!user) {
+      return { success: false, error: "User not found" };
+    }
+    
+    revalidatePath(`/user/${userId}`);
+    revalidatePath("/users");
+    
+    return { success: true };
+  } catch (error) {
+    console.error("Error updating featured status:", error);
+    return { success: false, error: "Failed to update featured status" };
   }
 }

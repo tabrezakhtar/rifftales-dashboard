@@ -76,6 +76,16 @@ export default function LoginPage() {
               autoComplete="email"
               size="medium"
               disabled={loading}
+              slotProps={{
+                inputLabel: {
+                  shrink: true,
+                  sx: { 
+                    color: "rgba(255, 255, 255, 0.9)",
+                    fontWeight: 500,
+                    fontSize: "0.95rem"
+                  }
+                }
+              }}
             />
           </Box>
           
@@ -89,6 +99,16 @@ export default function LoginPage() {
               autoComplete="current-password"
               size="medium"
               disabled={loading}
+              slotProps={{
+                inputLabel: {
+                  shrink: true,
+                  sx: { 
+                    color: "rgba(255, 255, 255, 0.9)",
+                    fontWeight: 500,
+                    fontSize: "0.95rem"
+                  }
+                }
+              }}
             />
           </Box>
           

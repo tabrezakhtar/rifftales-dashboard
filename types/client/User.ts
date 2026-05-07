@@ -4,4 +4,5 @@ export interface ClientUser {
   username: string;
   email: string;
   isBanned: boolean;
+  featured?: boolean;
 }

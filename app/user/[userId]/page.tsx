@@ -5,6 +5,7 @@ import ArrowBackIcon from "@mui/icons-material/ArrowBack";
 import CommentIcon from "@mui/icons-material/Comment";
 import BuildIcon from "@mui/icons-material/Build";
 import BanUserForm from "@/components/users/BanUserForm";
+import FeaturedUserForm from "@/components/users/FeaturedUserForm";
 
 interface UserPageProps {
   params: Promise<{
@@ -77,6 +78,10 @@ export default async function UserPage({ params }: UserPageProps) {
           </Box>
         </CardContent>
       </Card>
+      
+      <Box sx={{ mt: 4 }}>
+        <FeaturedUserForm userId={user._id} featured={user.featured || false} />
+      </Box>
       
       <Box sx={{ mt: 4 }}>
         <BanUserForm userId={user._id} isBanned={user.isBanned} />
