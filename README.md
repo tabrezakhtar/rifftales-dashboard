@@ -34,7 +34,6 @@ An admin dashboard built with Next.js 16, TypeScript, MongoDB, and Material-UI f
 - User management (view, search, ban/unban, featured users)
 - Equipment management (browse, view details, CRUD operations)
 - Comment management and moderation
-- Real-time search and filtering
 - Responsive Material-UI design
 
 ## Tech Stack
